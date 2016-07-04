@@ -1,0 +1,12 @@
+{
+  "name": "paw-angular",
+  "version": "1.0.0",
+  "description": "Paw Code generator extension for Angular's $http provider.",
+  "main": "AngularGenerator.js",
+  "repository": {
+    "type": "git",
+    "url": "git"
+  },
+  "author": "Sergio Díaz <seich@martianwabbit.com>",
+  "license": "MIT"
+}

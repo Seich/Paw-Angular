@@ -1,0 +1,22 @@
+$http({
+	method: '{{method}}',
+	url: '{{url}}',
+	{{#if headers}}
+	headers: {
+		{{#each headers}}
+		'{{name}}': '{{{value}}}'{{#unless @last}}, {{/unless}}
+		{{/each}}
+	},
+	{{/if}}
+	{{#if body}}
+	{{#if jsonContent}}
+	data: {
+		{{#each body}}
+		'{{name}}': '{{value}}',
+		{{/each}}
+	}
+	{{else}}
+	data: '{{{body}}}'
+	{{/if}}
+	{{/if}}
+}).then(res => {});
