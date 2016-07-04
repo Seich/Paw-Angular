@@ -1,6 +1,9 @@
 # Paw Generator for Angular's $http provider
 Paw Code generator extension for Angular's $http provider.
 
+# Installation
+Clone this git repo into your extensions folder as `com.martianwabbit.PawExtensions.AngularGenerator`.
+
 # License
 The MIT License (MIT)
 Copyright (c) 2016 Sergio Díaz
