@@ -1,10 +1,5 @@
 var handlebars = require('./handlebars');
 
-var addslashes = function(str) {
-	return ("" + str).replace(/[\\"]/g, '\\$&')
-					 .replace(/\n/g, '');
-};
-
 var AngularGenerator = function() {
 	this.generate = function(context, requests, options) {
 		var request = context.getCurrentRequest();
@@ -14,7 +9,7 @@ var AngularGenerator = function() {
 		var jsonContent = false;
 		var body = addslashes(request.body);
 
-		for(var key in request.headers) {
+		for (var key in request.headers) {
 			headers.push({
 				name: key,
 				value: request.headers[key]
@@ -22,15 +17,8 @@ var AngularGenerator = function() {
 		}
 
 		if (typeof request.jsonBody === 'object') {
-			body = [];
+			body = jsonBodyObject(request.jsonBody);
 			jsonContent = true;
-
-			for(var j in request.jsonBody) {
-				body.push({
-					name: j,
-					value: request.jsonBody[j]
-				});
-			}
 		}
 
 		var view = {
@@ -53,3 +41,49 @@ AngularGenerator.languageHighlighter = 'coffeescript'; // The Javascript highlig
 AngularGenerator.fileExtension = 'js';
 
 registerCodeGenerator(AngularGenerator);
+
+// I stole these from the jQuery Generator :(
+var addslashes = function(str) {
+	return ('' + str).replace(/[\\"]/g, '\\$&').replace(/\n/g, '');
+};
+
+var jsonBodyObject = function(object, indent) {
+	var s;
+
+	indent = indent ? indent : 0;
+
+	if (object === null) {
+		s = 'null';
+	} else if (typeof object === 'string') {
+		s = `'${addslashes(object)}'`;
+	} else if (typeof object === 'number') {
+		s = `${object}`;
+	} else if (typeof object === 'boolean') {
+		s = `${object}`;
+	} else if (typeof object === 'object') {
+		var indentStr = Array(indent + 2).join('    ');
+		var indentStrChildren = Array(indent + 3).join('    ');
+
+		if (object.length != null) {
+			s = '[\n';
+
+			for (var i = 0, len = object.length; i < len; i++) {
+				s += `${indentStrChildren}${jsonBodyObject(object[i], indent + 1)}`;
+				s += ',\n';
+			}
+
+			s += `${indentStr}]`;
+		} else {
+			s = '{\n';
+
+			for (var key in object) {
+				var value = object[key];
+				s += `${indentStrChildren}'${addslashes(key)}': ${jsonBodyObject(value, indent + 1)},\n`;
+			}
+
+			s += `${indentStr}}`;
+		}
+	}
+
+	return s;
+};

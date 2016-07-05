@@ -10,11 +10,7 @@ $http({
 	{{/if}}
 	{{#if body}}
 	{{#if jsonContent}}
-	data: {
-		{{#each body}}
-		'{{name}}': '{{value}}',
-		{{/each}}
-	}
+	data: {{{body}}}
 	{{else}}
 	data: '{{{body}}}'
 	{{/if}}

@@ -1,0 +1,15 @@
+{
+	"preset": "airbnb",
+	"validateIndentation": "\t",
+	"disallowTrailingComma": true,
+	"requireTrailingComma": false,
+	"disallowSpacesInFunctionDeclaration": {
+		"beforeOpeningRoundBrace": true
+	},
+	"requireSpacesInFunctionDeclaration": {
+		"beforeOpeningCurlyBrace": true
+	},
+	"requireSpacesInAnonymousFunctionExpression": {
+		"beforeOpeningCurlyBrace": true
+	}
+}
